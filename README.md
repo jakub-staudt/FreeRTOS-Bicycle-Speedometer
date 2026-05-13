@@ -1,10 +1,9 @@
 
 # Bicycle Speedometer with OLED Display
 
-A real-time bicycle speedometer built using the STM32F446RE microcontroller, a Hall effect sensor, and an SSD1306 OLED display.  
-The project was developed in STM32CubeIDE and uses FreeRTOS for multitasking and real-time task scheduling.
+A real-time bicycle speedometer built using the STM32F446RE microcontroller, a Hall effect sensor, and an SSD1306 OLED display. The project was developed in STM32CubeIDE and uses FreeRTOS for multitasking and real-time task scheduling.
 
-[![Watch the video](images/youtube-thumbnail.png)](https://youtu.be/ZC89R0Oh2PM?si=pRp1y0WykItvzwdK)
+[![Watch the video](images/youtube-thumbnail.png)](https://youtu.be/KIXGy_-FDHw?si=S9tv5LFiRT5-yjg3)
 
 ---
 
@@ -110,13 +109,16 @@ HAL_GetTick()
 
 Speed is calculated using:
 
-:contentReference[oaicite:0]{index=0}
+```math
+v = \frac{C}{\Delta t} \cdot 3.6
+```
 
 Where:
 
-- \( C \) = wheel circumference (meters)
-- \( \Delta t \) = time between pulses (seconds)
-- 3.6 converts m/s to km/h
+- `v` = speed in km/h
+- `C` = wheel circumference in meters
+- `Δt` = time between wheel rotations in seconds
+- `3.6` converts m/s into km/h
 
 ---
 
@@ -131,7 +133,17 @@ To improve measurement stability, the project implements:
 
 Filtering equation:
 
-:contentReference[oaicite:1]{index=1}
+```math
+avg = \frac{\sum x_i - x_{min} - x_{max}}{N - 2}
+```
+
+Where:
+
+- `avg` = filtered average speed
+- `x_i` = collected speed samples
+- `x_min` = minimum sample value
+- `x_max` = maximum sample value
+- `N` = total number of samples
 
 This helps eliminate:
 
@@ -197,20 +209,5 @@ Solutions involved:
 - Better GPIO configuration
 - Debugging using FreeRTOS LED tasks
 
----
-
-## Repository Structure
-
-```text
-├── Core/
-├── Drivers/
-├── Middlewares/
-├── images/
-│   ├── schematic.png
-│   ├── project1.png
-│   └── project2-close_up.png
-├── README.md
-└── *.ioc
-```
 
 
